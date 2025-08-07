@@ -1,15 +1,23 @@
 import mongoose from "mongoose";
 
-let taskSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  completedOn: { type: String },
-  isVitalTask: { type: String, default: false },
-  category: { type: String, required: true, default: "no category" },
-  status: { type: String, default: "not started" },
-  priority: { type: String, default: "low" },
-  desp: { type: String },
-  image: { type: String },
-});
+let taskSchema = new mongoose.Schema(
+  {
+    tasktitle: { type: String, required: true, unique: true },
+    taskdate: { type: String, required: true },
+    completedOn: { type: String, required: true, default: "not completed" },
+    isVitalTask: { type: String, default: false },
+    category: { type: String, required: true, default: "no category" },
+    status: { type: String, default: "not started" },
+    priority: { type: String, default: "low" },
+    taskdesc: { type: String },
+    taskimage: { type: String },
+    createdAt: String,
+    updatedAt: String,
+  },
+  {
+    timestamps: { currentTime: () => new Date().toLocaleString() },
+  }
+);
 
 let regUserSchema = new mongoose.Schema(
   {

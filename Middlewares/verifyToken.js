@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import userModel from "../Model/UserSchema.js";
 
-export const VerifyToken = async (req, res) => {
+const verifyToken = async (req, res, next) => {
   let token = req.headers?.authorization.split(" ")[1];
   if (token) {
     try {
@@ -10,10 +10,7 @@ export const VerifyToken = async (req, res) => {
       let findUser = await userModel.findOne({ useremail: useremail });
 
       if (findUser) {
-        res.status(200).json({
-          isAuthenticated: true,
-          data: findUser,
-        });
+        next();
       } else {
         res.status(401).json({
           message: "unauthorised user",
@@ -33,3 +30,5 @@ export const VerifyToken = async (req, res) => {
     });
   }
 };
+
+export default verifyToken;

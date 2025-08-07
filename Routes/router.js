@@ -1,7 +1,9 @@
 import express from "express";
 import login from "../Controllers/login.js";
 import register from "../Controllers/register.js";
-import { VerifyToken } from "../Controllers/VerifyToken.js";
+import addTask from "../Controllers/addTask.js";
+import Auth from "../Controllers/Auth.js";
+import verifyToken from "../Middlewares/verifyToken.js";
 
 let router = express.Router();
 
@@ -21,6 +23,8 @@ router.post("/login", login);
 
 router.post("/register", register);
 
-router.post("/verifytoken", VerifyToken);
+router.post("/auth", verifyToken, Auth);
+
+router.post("/addtask", verifyToken, addTask);
 
 export default router;

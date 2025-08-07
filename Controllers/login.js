@@ -27,11 +27,11 @@ let login = async (req, res) => {
         message: "You have logged in successfully.",
       });
     }
+  } else {
+    res.status(401).json({
+      message: "Invalid Credentials",
+    });
   }
-
-  res.status(401).json({
-    message: "Invalid Credentials",
-  });
 };
 
 export default login;
