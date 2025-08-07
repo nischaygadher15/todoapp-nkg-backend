@@ -3,13 +3,23 @@ import "dotenv/config";
 import userModel from "../Model/UserSchema.js";
 
 const verifyToken = async (req, res, next) => {
-  let token = req.headers?.authorization.split(" ")[1];
+  let token;
+
+  if (!req.headers.authorization) {
+    res.status(401).json({
+      message: "token do not found",
+    });
+  } else {
+    token = req.headers?.authorization.split(" ")[1];
+  }
+
   if (token) {
     try {
       let { useremail, username, exp } = jwt.verify(token, process.env.SECRET);
       let findUser = await userModel.findOne({ useremail: useremail });
 
       if (findUser) {
+        req.user = findUser;
         next();
       } else {
         res.status(401).json({
@@ -24,10 +34,6 @@ const verifyToken = async (req, res, next) => {
         });
       }
     }
-  } else {
-    res.status(401).json({
-      message: "token do not found",
-    });
   }
 };
 

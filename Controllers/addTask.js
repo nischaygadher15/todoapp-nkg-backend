@@ -5,7 +5,7 @@ let addTask = async (req, res) => {
 
   try {
     let updatedUser = await userModel.findByIdAndUpdate(
-      data.userId,
+      req.user._id,
       { $push: { tasks: data } },
       { new: true, runValidators: true }
     );
