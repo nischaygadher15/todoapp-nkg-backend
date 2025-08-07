@@ -29,7 +29,7 @@ let regUserSchema = new mongoose.Schema(
     cnfpassword: { type: String, required: true },
     iagreewithterms: { type: String, required: true },
     tasks: [taskSchema],
-    createdAt: String,
+    createdAt: String,  
     updatedAt: String,
   },
   {

@@ -5,6 +5,8 @@ import addTask from "../Controllers/addTask.js";
 import Auth from "../Controllers/Auth.js";
 import verifyToken from "../Middlewares/verifyToken.js";
 import getTasks from "../Controllers/getTasks.js";
+import getTaskById from "../Controllers/getTaskById.js";
+import editTaskById from "../Controllers/editTaskById.js";
 
 let router = express.Router();
 
@@ -28,6 +30,10 @@ router.post("/auth", verifyToken, Auth);
 
 router.post("/addtask", verifyToken, addTask);
 
-router.get("/gettask/:id", verifyToken, getTasks);
+router.get("/gettask", verifyToken, getTasks);
+
+router.get("/gettask/:id", verifyToken, getTaskById);
+
+router.get("/edittask/:id", verifyToken, editTaskById);
 
 export default router;
