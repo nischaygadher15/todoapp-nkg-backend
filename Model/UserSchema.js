@@ -4,7 +4,7 @@ let taskSchema = new mongoose.Schema(
   {
     tasktitle: { type: String, required: true },
     taskdate: { type: String, required: true },
-    completedOn: { type: Date, default: null },
+    completedOn: { type: String, default: null },
     isVitalTask: { type: Boolean, required: true, default: false },
     category: { type: String, required: true, default: "no category" },
     status: { type: String, required: true, default: "not started" },
