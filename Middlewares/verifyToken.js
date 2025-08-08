@@ -28,6 +28,7 @@ const verifyToken = async (req, res, next) => {
       }
     } catch (error) {
       console.log(error);
+      console.log(error.name);
       if (error.name == "TokenExpiredError") {
         res.status(401).json({
           message: "Token expired. Please log in again.",

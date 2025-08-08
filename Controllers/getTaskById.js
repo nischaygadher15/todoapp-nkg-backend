@@ -10,7 +10,7 @@ const getTaskById = (req, res) => {
   } else {
     res
       .status(404)
-      .json({ message: "Task do not found, Internal server error" });
+      .json({ message: "Internal server error - Task do not found" });
   }
 };
 
