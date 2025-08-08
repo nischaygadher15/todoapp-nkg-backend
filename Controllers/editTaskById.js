@@ -11,7 +11,13 @@ const editTaskById = async (req, res) => {
         "tasks._id": id,
       },
       {
-        $set: { "tasks.$": data },
+        $set: {
+          "tasks.$.tasktitle": data.tasktitle,
+          "tasks.$.taskdate": data.taskdate,
+          "tasks.$.priority": data.priority,
+          "tasks.$.taskdesc": data.taskdesc,
+          "tasks.$.updatedAt": new Date(),
+        },
       }
     );
     console.log(updatedUser);
