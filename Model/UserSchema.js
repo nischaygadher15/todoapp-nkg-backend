@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 let taskSchema = new mongoose.Schema(
   {
     tasktitle: { type: String, required: true },
-    taskdate: { type: Date, required: true },
+    taskdate: { type: String, required: true },
     completedOn: { type: Date, default: null },
     isVitalTask: { type: Boolean, required: true, default: false },
     category: { type: String, required: true, default: "no category" },
