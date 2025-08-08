@@ -9,6 +9,7 @@ import getTaskById from "../Controllers/getTaskById.js";
 import editTaskById from "../Controllers/editTaskById.js";
 import deleteById from "../Controllers/deleteById.js";
 import markVital from "../Controllers/markVital.js";
+import finishTask from "../Controllers/finishTask.js";
 
 let router = express.Router();
 
@@ -41,5 +42,7 @@ router.put("/edittask/:id", verifyToken, editTaskById);
 router.delete("/deletetask/:id", verifyToken, deleteById);
 
 router.put("/markvital/:id", verifyToken, markVital);
+
+router.put("/finishtask/:id", verifyToken, finishTask);
 
 export default router;
