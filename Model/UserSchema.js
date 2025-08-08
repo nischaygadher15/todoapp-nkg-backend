@@ -3,19 +3,17 @@ import mongoose from "mongoose";
 let taskSchema = new mongoose.Schema(
   {
     tasktitle: { type: String, required: true },
-    taskdate: { type: String, required: true },
-    completedOn: { type: String, required: true, default: "not completed" },
-    isVitalTask: { type: String, default: false },
+    taskdate: { type: Date, required: true },
+    completedOn: { type: Date, default: null },
+    isVitalTask: { type: Boolean, required: true, default: false },
     category: { type: String, required: true, default: "no category" },
-    status: { type: String, default: "not started" },
-    priority: { type: String, default: "low" },
-    taskdesc: { type: String },
-    taskimage: { type: String },
-    createdAt: String,
-    updatedAt: String,
+    status: { type: String, required: true, default: "not started" },
+    priority: { type: String, required: true, default: "low" },
+    taskdesc: { type: String, required: true, default: null },
+    taskimage: { type: String, default: "no image" },
   },
   {
-    timestamps: { currentTime: () => new Date().toLocaleString() },
+    timestamps: true,
   }
 );
 
@@ -29,11 +27,9 @@ let regUserSchema = new mongoose.Schema(
     cnfpassword: { type: String, required: true },
     iagreewithterms: { type: String, required: true },
     tasks: [taskSchema],
-    createdAt: String,  
-    updatedAt: String,
   },
   {
-    timestamps: { currentTime: () => new Date().toLocaleString() },
+    timestamps: true,
   }
 );
 

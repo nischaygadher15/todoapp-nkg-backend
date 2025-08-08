@@ -1,8 +1,29 @@
-const editTaskById = (req, res) => {
-  let { taskId } = req.params;
+import userModel from "../Model/UserSchema.js";
 
-  console.log(taskId);
-  res.status(200).json({ id: taskId });
+const editTaskById = async (req, res) => {
+  let { id } = req.params;
+  let data = req.body;
+  console.log(data);
+  try {
+    let updatedUser = await userModel.updateOne(
+      {
+        _id: req.user._id,
+        "tasks._id": id,
+      },
+      {
+        $set: { "tasks.$": data },
+      }
+    );
+    console.log(updatedUser);
+    res
+      .status(200)
+      .json({ success: true, message: "Task updated successfully." });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "Internal Server Error from editTaskById." });
+  }
 };
 
 export default editTaskById;

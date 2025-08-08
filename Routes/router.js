@@ -7,6 +7,7 @@ import verifyToken from "../Middlewares/verifyToken.js";
 import getTasks from "../Controllers/getTasks.js";
 import getTaskById from "../Controllers/getTaskById.js";
 import editTaskById from "../Controllers/editTaskById.js";
+import deleteById from "../Controllers/deleteById.js";
 
 let router = express.Router();
 
@@ -34,6 +35,8 @@ router.get("/gettask", verifyToken, getTasks);
 
 router.get("/gettask/:id", verifyToken, getTaskById);
 
-router.get("/edittask/:id", verifyToken, editTaskById);
+router.put("/edittask/:id", verifyToken, editTaskById);
+
+router.delete("/deletetask/:id", verifyToken, deleteById);
 
 export default router;

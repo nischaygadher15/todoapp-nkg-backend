@@ -10,7 +10,9 @@ let addTask = async (req, res) => {
       { new: true, runValidators: true }
     );
     // console.log(updatedUser);
-    res.status(201).json({ updatedUser });
+    res
+      .status(201)
+      .json({ success: true, message: "Task added successfully." });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error in adding task" });
