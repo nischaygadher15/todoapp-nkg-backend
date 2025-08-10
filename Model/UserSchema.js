@@ -2,7 +2,13 @@ import mongoose from "mongoose";
 
 let taskSchema = new mongoose.Schema(
   {
-    tasktitle: { type: String, required: true },
+    tasktitle: {
+      type: String,
+      required: true,
+      unique: true,
+      sparse: true,
+      default: null,
+    },
     taskdate: { type: String, required: true },
     completedOn: { type: String, default: null },
     isVitalTask: { type: Boolean, required: true, default: false },

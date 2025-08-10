@@ -3,7 +3,7 @@ import DecryptData from "../Controllers/DecryptData.js";
 import userModel from "../Model/UserSchema.js";
 
 const register = async (req, res) => {
-  let userData = req.body.data;
+  let userData = req.body;
 
   // console.log(userData);
 
