@@ -10,8 +10,11 @@ import editTaskById from "../Controllers/editTaskById.js";
 import deleteById from "../Controllers/deleteById.js";
 import markVital from "../Controllers/markVital.js";
 import finishTask from "../Controllers/finishTask.js";
+import multer from "multer";
 
 let router = express.Router();
+
+let upload = multer({ storage: multer.memoryStorage() });
 
 //Welcome Page
 router.get("/", (req, res) => {
@@ -31,7 +34,7 @@ router.post("/register", register);
 
 router.post("/auth", verifyToken, Auth);
 
-router.post("/addtask", verifyToken, addTask);
+router.post("/addtask", verifyToken, upload.single("taskimage"), addTask);
 
 router.get("/gettask", verifyToken, getTasks);
 

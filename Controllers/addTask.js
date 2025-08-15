@@ -2,13 +2,13 @@ import userModel from "../Model/UserSchema.js";
 
 let addTask = async (req, res) => {
   let data = { ...req.body };
-
+  console.log(req.file);
   try {
-    let updatedUser = await userModel.findByIdAndUpdate(
-      req.user._id,
-      { $push: { tasks: data } },
-      { new: true, runValidators: true }
-    );
+    // let updatedUser = await userModel.findByIdAndUpdate(
+    //   req.user._id,
+    //   { $push: { tasks: data } },
+    //   { new: true, runValidators: true }
+    // );
     // console.log(updatedUser);
     res
       .status(201)
