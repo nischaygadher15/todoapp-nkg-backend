@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
 
+// let taskImageSchema = new mongoose.Schema({
+//   public_id: { type: String },
+//   secure_url: { type: String },
+//   format: { type: String },
+//   width: { type: Number },
+//   height: { type: Number },
+//   created_at: { type: String },
+// });
+
 let taskSchema = new mongoose.Schema(
   {
     tasktitle: {
@@ -16,7 +25,14 @@ let taskSchema = new mongoose.Schema(
     status: { type: String, required: true, default: "not started" },
     priority: { type: String, required: true, default: "low" },
     taskdesc: { type: String, required: true, default: null },
-    taskimage: { type: String, default: "no image" },
+    taskimage: {
+      public_id: { type: String },
+      secure_url: { type: String },
+      format: { type: String },
+      width: { type: Number },
+      height: { type: Number },
+      created_at: { type: String },
+    },
   },
   {
     timestamps: true,
