@@ -40,7 +40,12 @@ router.get("/gettask", verifyToken, getTasks);
 
 router.get("/gettask/:id", verifyToken, getTaskById);
 
-router.put("/edittask/:id", verifyToken, editTaskById);
+router.put(
+  "/edittask/:id",
+  verifyToken,
+  upload.single("taskimage"),
+  editTaskById
+);
 
 router.delete("/deletetask/:id", verifyToken, deleteById);
 

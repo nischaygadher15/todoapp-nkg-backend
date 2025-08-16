@@ -31,7 +31,7 @@ let addTask = async (req, res) => {
         base64File,
         cloudinaryOptions
       );
-
+      // console.log(uploadResult);
       if (uploadResult) {
         let { public_id, secure_url, format, width, height, created_at } =
           uploadResult;

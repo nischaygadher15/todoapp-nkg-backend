@@ -26,12 +26,12 @@ let taskSchema = new mongoose.Schema(
     priority: { type: String, required: true, default: "low" },
     taskdesc: { type: String, required: true, default: null },
     taskimage: {
-      public_id: { type: String },
-      secure_url: { type: String },
-      format: { type: String },
-      width: { type: Number },
-      height: { type: Number },
-      created_at: { type: String },
+      public_id: { type: String, default: "" },
+      secure_url: { type: String, default: "" },
+      format: { type: String, default: "" },
+      width: { type: Number, default: "" },
+      height: { type: Number, default: "" },
+      created_at: { type: String, default: "" },
     },
   },
   {
