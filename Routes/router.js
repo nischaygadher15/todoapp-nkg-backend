@@ -11,6 +11,7 @@ import deleteById from "../Controllers/deleteById.js";
 import markVital from "../Controllers/markVital.js";
 import finishTask from "../Controllers/finishTask.js";
 import multer from "multer";
+import updateAccInfo from "../Controllers/updateAccInfo.js";
 
 let router = express.Router();
 
@@ -52,5 +53,7 @@ router.delete("/deletetask/:id", verifyToken, deleteById);
 router.put("/markvital/:id", verifyToken, markVital);
 
 router.put("/finishtask/:id", verifyToken, finishTask);
+
+router.put("/accinfo/:id", verifyToken, updateAccInfo);
 
 export default router;
