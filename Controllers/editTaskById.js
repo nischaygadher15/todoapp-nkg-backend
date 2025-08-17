@@ -12,12 +12,19 @@ const editTaskById = async (req, res) => {
   let { id } = req.params;
   let data = { ...req.body };
   let file = req.file;
+  let findUserTask = req.user.tasks.find((tsk) => tsk._id == id);
+  let updatedUserData = {
+    "tasks.$.tasktitle": data.tasktitle,
+    "tasks.$.taskdate": data.taskdate,
+    "tasks.$.priority": data.priority,
+    "tasks.$.taskdesc": data.taskdesc,
+    "tasks.$.updatedAt": new Date(),
+    "tasks.$.taskimage": data.taskimage,
+  };
+  console.log(file, data);
 
-  if (file && data.newUpload) {
-    // console.log(req.user.tasks);
-    let findUserTask = req.user.tasks.find((tsk) => tsk._id == id);
-
-    try {
+  try {
+    if (file && data.newUpload) {
       //Delete old image
       let deleteResult = await cloudinary.uploader.destroy(
         findUserTask.taskimage.public_id,
@@ -58,36 +65,31 @@ const editTaskById = async (req, res) => {
       };
 
       delete data.newUpload;
-
-      //Update user data in database
-      let updatedUser = await userModel.updateOne(
-        {
-          _id: req.user._id,
-          "tasks._id": id,
-        },
-        {
-          $set: {
-            "tasks.$.tasktitle": data.tasktitle,
-            "tasks.$.taskdate": data.taskdate,
-            "tasks.$.priority": data.priority,
-            "tasks.$.taskdesc": data.taskdesc,
-            "tasks.$.updatedAt": new Date(),
-            "tasks.$.taskimage": data.taskimage,
-          },
-        }
-      );
-      // console.log("FInally updated user:", updatedUser);
-
-      res.status(200).json({
-        success: true,
-        message: "Task added successfully.",
-        upload: true,
-        uploadMessage: "Image uploaded and replaced successfully.",
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: error.message });
+    } else {
+      delete updatedUserData["tasks.$.taskimage"];
     }
+
+    //Update user data in database
+    let updatedUser = await userModel.updateOne(
+      {
+        _id: req.user._id,
+        "tasks._id": id,
+      },
+      {
+        $set: updatedUserData,
+      }
+    );
+    console.log("FInally updated user:", updatedUser);
+
+    res.status(200).json({
+      success: true,
+      message: "Task added successfully.",
+      upload: true,
+      uploadMessage: "Image uploaded and replaced successfully.",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
