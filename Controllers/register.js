@@ -3,7 +3,7 @@ import DecryptData from "../Controllers/DecryptData.js";
 import userModel from "../Model/UserSchema.js";
 
 const register = async (req, res) => {
-  let userData = req.body;
+  let userData = { ...req.body };
 
   // console.log(userData);
 
@@ -66,6 +66,7 @@ const register = async (req, res) => {
       if (findUser) {
         res.status(409).json({ message: "useremail already registered" });
       } else {
+        delete userData.cnfpassword;
         let result = await userModel.create({ ...userData });
         // console.log(result);
         res

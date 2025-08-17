@@ -12,6 +12,7 @@ import markVital from "../Controllers/markVital.js";
 import finishTask from "../Controllers/finishTask.js";
 import multer from "multer";
 import updateAccInfo from "../Controllers/updateAccInfo.js";
+import changePassword from "../Controllers/changePassword.js";
 
 let router = express.Router();
 
@@ -55,5 +56,7 @@ router.put("/markvital/:id", verifyToken, markVital);
 router.put("/finishtask/:id", verifyToken, finishTask);
 
 router.put("/accinfo/:id", verifyToken, updateAccInfo);
+
+router.put("/changepass", verifyToken, changePassword);
 
 export default router;
