@@ -5,8 +5,9 @@ import "dotenv/config";
 export const GenerateRefreshToken = () => {
   let rowToken = crypto.randomBytes(40).toString("hex");
   let expiresAt = new Date();
-  expiresAt.setDate(expiresAt.getDate() + 7);
-  return { rowToken, expiresAt: expiresAt.getTime() };
+  // expiresAt.setDate(expiresAt.getDate() + 7);
+  // return { rowToken, expiresAt: expiresAt.getTime() };
+  return { rowToken, expiresAt: expiresAt.getTime() + 2 * 60 * 1000 };
 };
 
 export const GenerateAccessToken = (userId) => {

@@ -5,44 +5,40 @@ export const refreshToken = async (req, res) => {
   try {
     let refToken = req.cookies.refreshToken;
     let { userId } = req.body;
-    console.log(req.body);
-    if (!refToken || !userId) {
-      res.json({ success: false, message: "Unauthorised request" });
-    }
 
-    let findUser = await userModel.findOne({ _id: userId });
-
-    if (!findUser) {
-      res.json({
-        success: false,
-        message: "Unauthorised request",
-      });
-    }
-
-    if (!findUser.refreshToken) {
-      res.json({
-        success: false,
-        message: "Session expired please login again",
-      });
-    }
-
-    if (findUser.refreshToken.token !== refToken) {
-      res.json({
-        success: false,
-        message: "Unauthorised request",
-      });
-    }
-
-    if (!findUser.refreshToken.expiresAt > Date.now()) {
-      res.json({
+    if (!refToken) {
+      return res.json({
         success: false,
         message: "Session expired, please login again",
       });
     }
 
+    if (!userId) {
+      return res.json({
+        success: false,
+        message: "Unauthorised request - no userId found",
+      });
+    }
+
+    let findUser = await userModel.findOne({ _id: userId });
+
+    if (!findUser) {
+      return res.json({
+        success: false,
+        message: "Unauthorised request - invalid userId",
+      });
+    }
+
+    if (findUser.refreshToken.token !== refToken) {
+      return res.json({
+        success: false,
+        message: "Unauthorised request - Invalid refresh token",
+      });
+    }
+
     let accessToken = GenerateAccessToken(findUser._id);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       token: accessToken,
       data: findUser,
