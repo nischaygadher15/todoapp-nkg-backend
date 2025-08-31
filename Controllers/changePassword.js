@@ -1,33 +1,25 @@
 import Joi from "joi";
+import userModel from "../Model/UserSchema.js";
 
-const changePassword = (req, res) => {
+const changePassword = async (req, res) => {
   let { password, newPassword, confNewPassword } = { ...req.body };
-  //   password: 'sdsdf',
-  //   newPassword: 'Nisc@2203',
-  //   confNewPassword: 'Nisc@2203'
 
   let passwordSchema = Joi.object({
-    password: Joi.string()
-      .required()
-      .custom((value, helpers) => {
-        if (value == req.user.password) return value;
-        else return helpers.error("any.invalid");
-      })
-      .messages({
-        "string.base": "password must be string",
-        "any.required": "password is required",
-        "any.invalid": "current password do not match",
-      }),
+    password: Joi.string().required().messages({
+      "string.base": "password must be string",
+      "any.required": "password is required",
+      "any.invalid": "current password do not match",
+    }),
     newPassword: Joi.string()
       .required()
       .pattern(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[~!@#%^&*()[]_+-=?<>])[A-Za-zd~!@#%^&*()[]_+-=?<>]{6,}$/
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#%^&*()\[\]_+\-=?<>])[A-Za-z\d~!@#%^&*()\[\]_+\-=?<>]{6,}$/
       )
       .messages({
         "string.base": "new password must be string",
         "any.required": "new password is required",
         "string.pattern.base":
-          "new password must have 1 aphabet, 1 capital aphabet, 1 number, 1 special character and total 6 characters at least",
+          "password must have 1 aphabet, capital alphabet, number, special character and 6 characters",
       }),
     confNewPassword: Joi.string()
       .required()
@@ -40,6 +32,22 @@ const changePassword = (req, res) => {
   let { error } = passwordSchema.validate(req.body, {
     abortEarly: false,
   });
+
+  if (!error && password !== req.user.password) {
+    res.json({ success: false, message: "Current password do not match" });
+  }
+
+  if (!error) {
+    try {
+      await userModel.updateOne(
+        { _id: req.user._id },
+        { $set: { password: newPassword } }
+      );
+      res.json({ success: true, message: "Password change successfully" });
+    } catch (error) {
+      res.json({ success: false, message: error.message });
+    }
+  }
 
   res.json({ error });
 };

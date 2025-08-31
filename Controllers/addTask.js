@@ -21,7 +21,7 @@ let addTask = async (req, res) => {
     let cloudinaryOptions = {
       secure: true,
       folder: `TodoApp_Nkg/${req.user._id}`,
-      public_id: `${file.originalname.split(".")[0]}`,
+      public_id: `${file.originalname.split(".")[0]}_${Date.now()}`,
       unique_filename: false,
       overwrite: true,
     };

@@ -36,10 +36,12 @@ const register = async (req, res) => {
     cnfpassword: Joi.string()
       .required("confirm password is required!")
       .min(6)
+      .valid(Joi.ref("password"))
       .messages({
         "string.base": "confirm password must be string",
         "any.required": "confirm password is required!",
         "string.min": "confirm password must be atleast 6 character long.",
+        "any.only": "confirm password must match with password",
       }),
     iagreewithterms: Joi.boolean()
       .required("Agreement with terms is required!")

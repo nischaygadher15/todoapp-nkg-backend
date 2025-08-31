@@ -1,14 +1,5 @@
 import mongoose from "mongoose";
 
-// let taskImageSchema = new mongoose.Schema({
-//   public_id: { type: String },
-//   secure_url: { type: String },
-//   format: { type: String },
-//   width: { type: Number },
-//   height: { type: Number },
-//   created_at: { type: String },
-// });
-
 let taskSchema = new mongoose.Schema(
   {
     tasktitle: {
@@ -39,6 +30,18 @@ let taskSchema = new mongoose.Schema(
   }
 );
 
+let refreshTokenSchema = new mongoose.Schema(
+  {
+    token: { type: String, required: true },
+    tokenId: { type: String, required: true },
+    expiresAt: { type: Number, required: true },
+    created_at: { type: String },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 let regUserSchema = new mongoose.Schema(
   {
     firstname: { type: String, required: true },
@@ -46,9 +49,9 @@ let regUserSchema = new mongoose.Schema(
     username: { type: String, required: true },
     useremail: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    cnfpassword: { type: String, required: true },
     iagreewithterms: { type: String, required: true },
     tasks: [taskSchema],
+    refreshToken: refreshTokenSchema,
   },
   {
     timestamps: true,

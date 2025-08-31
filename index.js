@@ -3,10 +3,13 @@ import cors from "cors";
 import "dotenv/config";
 import router from "./Routes/router.js";
 import connectDB from "./Model/DbConnector.js";
+import cookieParser from "cookie-parser";
 
 let app = express();
 
 connectDB();
+
+app.use(cookieParser());
 
 app.use(express.json());
 
@@ -14,6 +17,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     methods: "GET,POST,PUT,DELETE,PATCH",
+    credentials: true,
   })
 );
 

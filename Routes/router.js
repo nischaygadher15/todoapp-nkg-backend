@@ -13,6 +13,7 @@ import finishTask from "../Controllers/finishTask.js";
 import multer from "multer";
 import updateAccInfo from "../Controllers/updateAccInfo.js";
 import changePassword from "../Controllers/changePassword.js";
+import { refreshToken } from "../Controllers/refreshToken.js";
 
 let router = express.Router();
 
@@ -35,6 +36,8 @@ router.post("/login", login);
 router.post("/register", register);
 
 router.post("/auth", verifyToken, Auth);
+
+router.post("/refresh", refreshToken);
 
 router.post("/addtask", verifyToken, upload.single("taskimage"), addTask);
 

@@ -7,6 +7,7 @@ const verifyToken = async (req, res, next) => {
 
   if (!req.headers.authorization) {
     res.status(401).json({
+      isTokenExpired: false,
       message: "token do not found",
     });
   } else {
@@ -15,23 +16,23 @@ const verifyToken = async (req, res, next) => {
 
   if (token) {
     try {
-      let { useremail, username, exp } = jwt.verify(token, process.env.SECRET);
-      let findUser = await userModel.findOne({ useremail: useremail });
+      let decoded = jwt.verify(token, process.env.SECRET);
+      let findUser = await userModel.findOne({ _id: decoded.userId });
 
       if (findUser) {
         req.user = findUser;
         next();
       } else {
         res.status(401).json({
+          isTokenExpired: false,
           message: "unauthorised user",
         });
       }
     } catch (error) {
-      console.log(error);
-      console.log(error.name);
       if (error.name == "TokenExpiredError") {
         res.status(401).json({
           message: "Token expired. Please log in again.",
+          isTokenExpired: true,
         });
       }
     }
