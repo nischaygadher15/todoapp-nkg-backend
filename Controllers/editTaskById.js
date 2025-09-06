@@ -79,13 +79,13 @@ const editTaskById = async (req, res) => {
         $set: updatedUserData,
       }
     );
-    console.log("FInally updated user:", updatedUser);
+    // console.log("FInally updated user:", updatedUser);
 
     res.status(200).json({
       success: true,
-      message: "Task added successfully.",
+      message: "Task edited successfully.",
       upload: true,
-      uploadMessage: "Image uploaded and replaced successfully.",
+      uploadMessage: file ? "Image uploaded and replaced successfully." : null,
     });
   } catch (error) {
     console.log(error);

@@ -31,7 +31,7 @@ let addTask = async (req, res) => {
         base64File,
         cloudinaryOptions
       );
-      // console.log(uploadResult);
+      console.log(uploadResult);
       if (uploadResult) {
         let { public_id, secure_url, format, width, height, created_at } =
           uploadResult;
@@ -50,7 +50,7 @@ let addTask = async (req, res) => {
           { $push: { tasks: data } },
           { new: true, runValidators: true }
         );
-        // console.log(updatedUser);
+        console.log(updatedUser);
         res.status(201).json({
           success: true,
           message: "Task added successfully.",
